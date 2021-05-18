@@ -1,0 +1,19 @@
+.table {
+  width: 70%;
+  margin: 30px;
+  border-collapse: collapse;
+  background: radial-gradient(farthest-corner at 50% 50%, white, #dcecf8);
+  color: #0c213b;
+
+  & th {
+    padding: 10px;
+    border: 1px solid grey;
+    font-size: 20px;
+  }
+
+  & td {
+    padding: 5px 7px;
+    border: 1px solid grey;
+    font-size: 17px;
+  }
+}

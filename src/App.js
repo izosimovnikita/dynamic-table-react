@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
+
+import Table from "./components/Table/Table";
+
+import "./App.scss";
 
 function App() {
+  const small_data =
+    "http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
+  const huge_data =
+    "http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&delay=3&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
+
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    axios.get(huge_data).then((response) => {
+      const people = response.data;
+      setData(people);
+      setLoading(false);
+    });
+  }, [small_data]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {loading ? (
+        <div className="loader">
+          <ClimbingBoxLoader color="orange" loading={loading} size={19} />
+        </div>
+      ) : (
+        <Table data={data} />
+      )}
     </div>
   );
 }
