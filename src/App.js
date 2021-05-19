@@ -3,8 +3,13 @@ import axios from "axios";
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 
 import Table from "./components/Table/Table";
+import DataType from "./components/DataType/DataType";
+import DataPerson from "./components/DataPerson/DataPerson";
 
 import "./App.scss";
+
+// *  TODO:
+// * - Сделать фильтрацию таблицы вводом в инпут
 
 function App() {
   const small_data =
@@ -14,6 +19,33 @@ function App() {
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
+  const [direction, setDirection] = useState(true); // если true - по возрастанию, false - по убыванию
+  const [sortField, setSortField] = useState();
+  const [personData, setPersonData] = useState(null);
+  const [displayChooseData, setdisplayChooseData] = useState(false);
+
+  const onSort = (nameColumn) => {
+    const copyData = data.slice();
+    let sortedData;
+
+    if (direction) {
+      sortedData = copyData.sort((a, b) => {
+        return a[nameColumn] > b[nameColumn] ? 1 : -1;
+      });
+    } else {
+      sortedData = copyData.sort((a, b) => {
+        return a[nameColumn] < b[nameColumn] ? 1 : -1;
+      });
+    }
+
+    setDirection(!direction);
+    setData(sortedData);
+    setSortField(nameColumn);
+  };
+
+  const onTapPerson = (item) => {
+    setPersonData(item);
+  };
 
   useEffect(() => {
     axios.get(huge_data).then((response) => {
@@ -21,17 +53,33 @@ function App() {
       setData(people);
       setLoading(false);
     });
-  }, [small_data]);
+  }, []);
 
   return (
     <div className="App">
-      {loading ? (
+      {displayChooseData ? (
+        <DataType />
+      ) : loading ? (
         <div className="loader">
-          <ClimbingBoxLoader color="orange" loading={loading} size={19} />
+          <ClimbingBoxLoader color="blue" loading={loading} size={19} />
         </div>
       ) : (
-        <Table data={data} />
+        <div className="main">
+          <form>
+            <button type="submit">Найти</button>
+            <input placeholder="Фильтр" />
+          </form>
+          <Table
+            data={data}
+            onSortColumn={onSort}
+            sortDirection={direction}
+            sortField={sortField}
+            onTapPerson={onTapPerson}
+          />
+        </div>
       )}
+
+      {personData ? <DataPerson personData={personData} /> : null}
     </div>
   );
 }
