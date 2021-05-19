@@ -2,11 +2,11 @@ import React from "react";
 
 import "./DataType.scss";
 
-function DataType() {
+function DataType({ onSetData }) {
   return (
     <div className="data-type">
-      <button>Малая база данных</button>
-      <button>Большая база данных</button>
+      <button onClick={() => onSetData("small")}>Малая база данных</button>
+      <button onClick={() => onSetData("huge")}>Большая база данных</button>
     </div>
   );
 }

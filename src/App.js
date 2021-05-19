@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 
@@ -17,12 +17,12 @@ function App() {
   const huge_data =
     "http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&delay=3&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState();
   const [direction, setDirection] = useState(true); // если true - по возрастанию, false - по убыванию
   const [sortField, setSortField] = useState();
   const [personData, setPersonData] = useState(null);
-  const [displayChooseData, setdisplayChooseData] = useState(false);
+  const [displayChooseData, setDisplayChooseData] = useState(true);
 
   const onSort = (nameColumn) => {
     const copyData = data.slice();
@@ -47,18 +47,31 @@ function App() {
     setPersonData(item);
   };
 
-  useEffect(() => {
-    axios.get(huge_data).then((response) => {
+  const onSetData = (type) => {
+    let chosenType;
+    if (type === "small") {
+      chosenType = small_data;
+    } else {
+      chosenType = huge_data;
+    }
+
+    fetchChosenTypeData(chosenType);
+    setDisplayChooseData(false);
+    setLoading(true);
+  };
+
+  const fetchChosenTypeData = (typeData) => {
+    axios.get(typeData).then((response) => {
       const people = response.data;
       setData(people);
       setLoading(false);
     });
-  }, []);
+  };
 
   return (
     <div className="App">
       {displayChooseData ? (
-        <DataType />
+        <DataType onSetData={onSetData} />
       ) : loading ? (
         <div className="loader">
           <ClimbingBoxLoader color="blue" loading={loading} size={19} />
