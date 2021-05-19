@@ -14,9 +14,9 @@ function Table({ data, onSortColumn, sortDirection, sortField, onTapPerson }) {
             ID
             {sortField === "id" ? (
               sortDirection ? (
-                <img src={up} alt="up arrow"/>
+                <img src={up} alt="up arrow" />
               ) : (
-                <img src={down} alt="down arrow"/>
+                <img src={down} alt="down arrow" />
               )
             ) : null}
           </th>
@@ -24,7 +24,7 @@ function Table({ data, onSortColumn, sortDirection, sortField, onTapPerson }) {
             Имя
             {sortField === "firstName" ? (
               sortDirection ? (
-                <img src={up} alt="up arrow"/>
+                <img src={up} alt="up arrow" />
               ) : (
                 <img src={down} />
               )
@@ -34,9 +34,9 @@ function Table({ data, onSortColumn, sortDirection, sortField, onTapPerson }) {
             Фамилия
             {sortField === "lastName" ? (
               sortDirection ? (
-                <img src={up} alt="up arrow"/>
+                <img src={up} alt="up arrow" />
               ) : (
-                <img src={down} alt="down arrow"/>
+                <img src={down} alt="down arrow" />
               )
             ) : null}
           </th>
@@ -44,9 +44,9 @@ function Table({ data, onSortColumn, sortDirection, sortField, onTapPerson }) {
             E-mail
             {sortField === "email" ? (
               sortDirection ? (
-                <img src={up} alt="up arrow"/>
+                <img src={up} alt="up arrow" />
               ) : (
-                <img src={down} alt="down arrow"/>
+                <img src={down} alt="down arrow" />
               )
             ) : null}
           </th>
@@ -54,9 +54,9 @@ function Table({ data, onSortColumn, sortDirection, sortField, onTapPerson }) {
             Телефон
             {sortField === "phone" ? (
               sortDirection ? (
-                <img src={up} alt="up arrow"/>
+                <img src={up} alt="up arrow" />
               ) : (
-                <img src={down} alt="down arrow"/>
+                <img src={down} alt="down arrow" />
               )
             ) : null}
           </th>
@@ -64,7 +64,10 @@ function Table({ data, onSortColumn, sortDirection, sortField, onTapPerson }) {
       </thead>
       <tbody>
         {data.map((person) => (
-          <tr key={person.id + Math.random() * 10} onClick={() => onTapPerson(person)}>
+          <tr
+            key={person.id + person.phone}
+            onClick={() => onTapPerson(person)}
+          >
             <td>{person.id}</td>
             <td>{person.firstName}</td>
             <td>{person.lastName}</td>

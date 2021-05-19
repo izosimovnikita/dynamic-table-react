@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 
@@ -47,7 +47,7 @@ function App() {
     setPersonData(item);
   };
 
-  const onSetData = (type) => {
+  const handlerData = (type) => {
     let chosenType;
     if (type === "small") {
       chosenType = small_data;
@@ -68,13 +68,15 @@ function App() {
     });
   };
 
+  useEffect(() => {}, [personData]);
+
   return (
     <div className="App">
       {displayChooseData ? (
-        <DataType onSetData={onSetData} />
+        <DataType handlerData={handlerData} />
       ) : loading ? (
         <div className="loader">
-          <ClimbingBoxLoader color="blue" loading={loading} size={19} />
+          <ClimbingBoxLoader color="black" loading={loading} size={19} />
         </div>
       ) : (
         <div className="main">

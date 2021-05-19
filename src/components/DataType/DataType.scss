@@ -5,9 +5,32 @@
   transform: translate(-50%, -50%);
 
   & button {
+    border-radius: 10px;
+    cursor: pointer;
     margin: 10px;
     width: 280px;
     height: 70px;
     font-size: 23px;
+    color: #fff;
+
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+
+  & .small-data {
+    background-color: #22b7ff;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: #0094db;
+    }
+  }
+
+  & .huge-data {
+    background-color: #b41010;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: #930d0d;
+    }
   }
 }
